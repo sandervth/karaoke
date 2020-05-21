@@ -1,6 +1,7 @@
 body {
     font: normal 14px Verdana, Arial, sans-serif;
 }
+
 table {
     border-collapse: collapse;
     width: 100%;
@@ -15,30 +16,33 @@ td, th {
 tr:nth-child(even) {
     background-color: #EEDFCC;
 }
+
 tr:nth-child(odd) {
     background-color: #FFEFDB;
 }
 
-.divblock{
+.divblock {
     margin-top: 10px;
     border: 1px solid #000000;
     background-color: #FFE4C4;
 }
 
-.lyricsdiv{
+.lyricsdiv {
     border: 1px solid #000000;
-    padding:30px 0;
-    text-align:center;
-    font-size:40px;
+    padding: 30px 0;
+    text-align: center;
+    font-size: 40px;
     background-color: #FFE4C4;
 }
-.error{
+
+.error {
     color: #FF0000;
     font-size: 14px;
 }
-.nowplaying{
+
+.nowplaying {
     margin-bottom: 10px;
-    text-align:center;
+    text-align: center;
     font-size: 17px;
     font-weight: bold;
 }

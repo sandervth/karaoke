@@ -27,11 +27,11 @@ class Karaoke
 
     public function getInputErrors(): array
     {
-        $errors=[];
-        if(empty($this->artist)){
+        $errors = [];
+        if (empty($this->artist)) {
             $errors[] = 'Oops, you forgot to specify an artist';
         }
-        if(empty($this->song)){
+        if (empty($this->song)) {
             $errors[] = 'Oops, you forgot to specify a song';
         }
 
@@ -41,7 +41,7 @@ class Karaoke
     public function getLyrics(): array
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://private-anon-acdc41779e-lyricsovh.apiary-proxy.com/v1/'.$this->artist.'/'.$this->song);
+        curl_setopt($ch, CURLOPT_URL, 'https://private-anon-acdc41779e-lyricsovh.apiary-proxy.com/v1/' . $this->artist . '/' . $this->song);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
@@ -49,22 +49,20 @@ class Karaoke
         $output = curl_exec($ch);
         curl_close($ch);
 
-        if(!$output){
+        if (!$output) {
             throw new Exception('Error connecting to lyrics API.');
         }
 
         $output = json_decode($output, true);
 
-        if(key_exists('error', $output)){
+        if (key_exists('error', $output)) {
             $this->processedOutput['error'] = 'No lyrics match your criteria';
-        }
-        elseif(key_exists('lyrics', $output)){
+        } elseif (key_exists('lyrics', $output)) {
             $lyricasArray = preg_split('/\r\n|\r|\n/', $output['lyrics']);
             $this->processedOutput['lyrics'] = array_filter($lyricasArray, 'strlen');
             $this->setPlaceholder('Get Ready!....');
             $this->lyricsPresent = true;
-        }
-        else{
+        } else {
             throw new Exception('Output not formatted as expected');
         }
 
@@ -86,10 +84,10 @@ class Karaoke
     {
         $jsJson = null;
 
-        foreach($this->processedOutput['lyrics'] as $key => $line){
+        foreach ($this->processedOutput['lyrics'] as $key => $line) {
             $jsJson .= '{
-            "id" : "'.$key.'",
-            "msg"   : "'.$line.'",
+            "id" : "' . $key . '",
+            "msg"   : "' . $line . '",
             },';
         }
 
