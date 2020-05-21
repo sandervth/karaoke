@@ -1,0 +1,44 @@
+body {
+    font: normal 14px Verdana, Arial, sans-serif;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #FFE4C4;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #EEDFCC;
+}
+tr:nth-child(odd) {
+    background-color: #FFEFDB;
+}
+
+.divblock{
+    margin-top: 10px;
+    border: 1px solid #000000;
+    background-color: #FFE4C4;
+}
+
+.lyricsdiv{
+    border: 1px solid #000000;
+    padding:30px 0;
+    text-align:center;
+    font-size:40px;
+    background-color: #FFE4C4;
+}
+.error{
+    color: #FF0000;
+    font-size: 14px;
+}
+.nowplaying{
+    margin-bottom: 10px;
+    text-align:center;
+    font-size: 17px;
+    font-weight: bold;
+}
