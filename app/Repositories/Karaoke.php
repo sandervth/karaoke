@@ -5,6 +5,10 @@ namespace App\Repositories;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class Karaoke
+ * @package App\Repositories
+ */
 class Karaoke
 {
     public $lyricsPresent = false;
@@ -14,17 +18,34 @@ class Karaoke
     private $song = null;
     private $ip = null;
 
+    /**
+     * The constructor for the karaoke class binds the users IP address to the object
+     *
+     * Karaoke constructor.
+     * @param string $userIp
+     */
     public function __construct(string $userIp)
     {
         $this->ip = $userIp;
     }
 
-    public function setSearchcriteria(?string $artist, ?string $song): void
+    /**
+     * Registers the search criteria in the object
+     *
+     * @param string|null $artist
+     * @param string|null $song
+     */
+    public function setSearchCriteria(?string $artist, ?string $song): void
     {
         $this->artist = $artist;
         $this->song = $song;
     }
 
+    /**
+     * Finds and returns any specified errors on the input fields
+     *
+     * @return array
+     */
     public function getInputErrors(): array
     {
         $errors = [];
@@ -38,6 +59,12 @@ class Karaoke
         return $errors;
     }
 
+    /**
+     * Makes the API call based on the search criteria and parses the API data into a usable array
+     *
+     * @return array
+     * @throws Exception
+     */
     public function getLyrics(): array
     {
         $ch = curl_init();
@@ -67,19 +94,33 @@ class Karaoke
         }
 
         return $this->processedOutput;
-
     }
 
+    /**
+     * Sets the placeholder text for the karaoke player
+     *
+     * @param string $placeholder
+     */
     private function setPlaceholder(string $placeholder): void
     {
         $this->placeHolder = $placeholder;
     }
 
+    /**
+     * Gets the placeholder text for the karaoke player
+     *
+     * @return string
+     */
     public function getPlaceholder(): string
     {
         return $this->placeHolder;
     }
 
+    /**
+     * Converts the lyrics array into JSON output for the JS code
+     *
+     * @return string
+     */
     public function getJsJson(): string
     {
         $jsJson = null;
@@ -94,11 +135,20 @@ class Karaoke
         return $jsJson;
     }
 
+    /**
+     * Add row in the search history table
+     *
+     */
     public function addSearchHistory(): void
     {
         DB::insert('INSERT INTO `searchhistory` (`artist`, `song`, `ip`) VALUES (?, ?, ?)', [$this->artist, $this->song, $this->ip]);
     }
 
+    /**
+     * Gets 10 latest searches for the current user/ip
+     *
+     * @return array
+     */
     public function getSearchHistory(): array
     {
         $results = DB::select('SELECT `artist`, `song`, DATE_FORMAT(`timest`, \'%d-%m-%Y %H:%i\') as nicedate FROM `searchhistory` WHERE ip = ? ORDER BY id DESC LIMIT 0,10', [$this->ip]);

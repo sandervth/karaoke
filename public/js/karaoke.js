@@ -1,10 +1,10 @@
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function ReplaceContentInContainer(id, content) {
     var container = document.getElementById(id);
     container.innerHTML = content;
-}
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function Lyrics() {

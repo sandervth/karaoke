@@ -11,9 +11,8 @@ use App\Repositories\Karaoke;
 $karaokeObj = new Karaoke(request()->ip());
 
 if (!empty($_GET['action']) && $_GET['action'] === 'trySong') {
-    $karaokeObj->setSearchcriteria($_GET['artist'], $_GET['song']);
+    $karaokeObj->setSearchCriteria($_GET['artist'], $_GET['song']);
 
-    //find and show potential input errors
     if ($inputErrors = $karaokeObj->getInputErrors()) {
         foreach ($inputErrors as $error) {
             echo "<span class='error'>" . $error . "</span><br>";
